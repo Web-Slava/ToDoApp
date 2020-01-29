@@ -13,7 +13,3 @@ code {
     monospace;
 }
 
-.custom-avatar, .custom-avatar img{
-  width: 100px !important; 
-  height: 100px !important;
-}

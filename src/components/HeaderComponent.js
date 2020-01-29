@@ -4,8 +4,24 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import  Avatar  from '@material-ui/core/Avatar';
 import avatar from './../assets/avatar.jpg';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles(theme => ({
+    root: {
+      display: 'flex',
+      '& > *': {
+        margin: theme.spacing(1),
+      },
+    },
+    sizeAvatar: {
+      width: theme.spacing(12),
+      height: theme.spacing(12),
+    },
+  }));
 
 function HeaderComponent() {
+    const classes = useStyles();
+
     return(
         <AppBar position="relative">
             <Grid container>
@@ -36,9 +52,7 @@ function HeaderComponent() {
                     <Avatar 
                         alt="Remy Sharp" 
                         src={avatar}
-                        classes={{
-                            root: 'custom-avatar'
-                        }}
+                        className={classes.sizeAvatar}
                     />
                 </Grid>
             </Grid>

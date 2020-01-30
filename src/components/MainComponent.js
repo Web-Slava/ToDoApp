@@ -1,6 +1,8 @@
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
+import TodoListContainer from './todo/TodoListContainer';
+import AddTodoComponent from './todo/AddTodoComponent';
 
 const generateIdByTitle = () => {
     return '_' + Math.random().toString(36).substr(2, 9);
@@ -22,7 +24,7 @@ class MainComponent extends React.Component{
             status: 'TODO'
         };
         this.setState({
-            todoList: this.state.map(item => item).unshift(newTodo)
+            todoList: this.state.todoList.concat(newTodo)
         });
     }
 
@@ -34,8 +36,13 @@ class MainComponent extends React.Component{
                 <Grid item
                       xs={6}
                 >
-                    <Card>
-                        Test
+                    <Card classes={{
+                        root: 'cardStyle'
+                    }}
+                    
+                    >
+                        <AddTodoComponent addNewTodo={this.addNewTodo} />
+                        <TodoListContainer todoList={this.state.todoList} />
                     </Card>   
                     </Grid>
             </Grid>

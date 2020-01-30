@@ -13,3 +13,19 @@ code {
     monospace;
 }
 
+.App{
+  width: 100%;
+}
+
+.footerComponent{
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  top: auto;
+}
+
+.MuiGrid-spacing-xs-8 {
+  margin: 0 !important;
+}
+
+

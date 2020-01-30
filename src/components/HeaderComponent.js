@@ -4,7 +4,7 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import  Avatar  from '@material-ui/core/Avatar';
 import avatar from './../assets/avatar.jpg';
-import { makeStyles } from '@material-ui/core/styles';
+import  makeStyles  from '@material-ui/core/styles/makeStyles';
 
 const useStyles = makeStyles(theme => ({
     root: {

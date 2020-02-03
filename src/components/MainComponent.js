@@ -18,6 +18,7 @@ class MainComponent extends React.Component{
     }
 
     addNewTodo(newTodoTitle) {
+        const newList = [];
         const newTodo = {
             title: newTodoTitle,
             id: generateIdByTitle(newTodoTitle),

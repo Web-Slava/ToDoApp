@@ -20,10 +20,12 @@ class AddTodoComponent extends React.Component {
     }
 
     onSaveTitle() {
-        this.props.addNewTodo(this.state.inputValue);
-        this.setState({
-            inputValue: ''
-        });
+        if(this.state.inputValue){
+            this.props.addNewTodo(this.state.inputValue);
+            this.setState({
+                inputValue: ''
+            });
+        }
     }
 
     render() {
@@ -48,7 +50,7 @@ class AddTodoComponent extends React.Component {
                 > 
                     <Button variant="contained"
                             color="primary"
-                            onClick={this.onSaveTitle}
+                            onClick={this.onSaveTitle}   
                     >
                         Save
                     </Button>

@@ -15,21 +15,46 @@ class MainComponent extends React.Component{
             todoList: []
         };
         this.addNewTodo = this.addNewTodo.bind(this);
+        this.updateTodo = this.updateTodo.bind(this);
+        this.deleteTodoById = this.deleteTodoById.bind(this);
     }
 
     addNewTodo(newTodoTitle) {
-        const newList = [];
         const newTodo = {
             title: newTodoTitle,
             id: generateIdByTitle(newTodoTitle),
-            status: 'TODO'
+            status: 'TODO' // or DONE
         };
-        this.setState({
+        this.setState({ 
             todoList: this.state.todoList.concat(newTodo)
         });
     }
 
+    updateTodo(newData) {
+        this.setState(prevState => ({
+            todoList: prevState.todoList.map(
+                todo => (
+                    (todo.id === newData.id)
+                        ? ({
+                            ...todo,
+                            ...newData
+                        })
+                        : todo
+                )
+            )
+        }));
+    }
+
+    deleteTodoById(id) {
+        this.setState((prevState) => ({
+            todoList: prevState.todoList.filter(
+                todo => todo.id !== id
+            )
+        }));
+    }
+
     render() {
+        console.log(this.state.todoList);
         return(
             <Grid container
                 justify="center"
@@ -43,7 +68,10 @@ class MainComponent extends React.Component{
                     
                     >
                         <AddTodoComponent addNewTodo={this.addNewTodo} />
-                        <TodoListContainer todoList={this.state.todoList} />
+                        <TodoListContainer todoList={this.state.todoList} 
+                                           updateTodo={this.updateTodo}
+                                           deleteTodoById={this.deleteTodoById}
+                        />
                     </Card>   
                     </Grid>
             </Grid>

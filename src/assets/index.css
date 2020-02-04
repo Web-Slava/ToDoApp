@@ -19,7 +19,7 @@ code {
 
 .footerComponent{
   width: 100%;
- position: fixed;
+  position: fixed;
   bottom: 0;
   top: auto;
 }
@@ -43,7 +43,7 @@ code {
   flex-direction: column-reverse;
   justify-content: flex-end;
   flex-wrap: nowrap !important;
-  min-height: 50vh;
+  min-height: 60vh;
 }
 
 .todo{
@@ -52,4 +52,5 @@ code {
   background: #fff;
   padding: 10px;
   margin-bottom: 10px;
+  border-radius: 7px;
 }

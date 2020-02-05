@@ -47,10 +47,35 @@ code {
 }
 
 .todo{
+  display: flex;
+  align-items: center;
   height: fit-content;
   border: 2px solid #3F51B5;
   background: #fff;
-  padding: 10px;
+  padding: 5px;
   margin-bottom: 10px;
   border-radius: 7px;
+}
+
+
+
+.todoInput{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.todoInput div{
+  flex-grow: 1;
+}
+
+.todoItem{
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.todoItem div{
+  flex-grow: 1;
+  overflow: auto;
 }

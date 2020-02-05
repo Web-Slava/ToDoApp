@@ -56,30 +56,34 @@ class TodoComponent extends React.Component{
         const {todo, deleteTodoById} = this.props;
         return(
             <div className="todo">
-                <Checkbox value={todo.status === 'DONE'}
-                          onChange={this.onChangeCheckbox}
-                />
                 {this.state.isEdit
                     ? (
-                        <div>
+                        <div className="todoInput">
+                            <Checkbox disabled/>
                             <TextField value={this.state.todoTitle}
                                        onChange={this.onChangeOldTitle}
                             />
                             <IconButton onClick={this.onUpdateTitle}>
                                 <Save />
                             </IconButton>
+                            <IconButton disabled>
+                                <Delete />
+                            </IconButton>
                         </div>
                     )
-                    : (
-                        <div onClick={this.onTitleClick}>
-                            {todo.title}
+                    : (<div className="todoItem">
+                            <Checkbox value={todo.status === 'DONE'}
+                                onChange={this.onChangeCheckbox}
+                            />
+                            <div onClick={this.onTitleClick}>
+                                {todo.title}
+                            </div>
+                            <IconButton onClick={() => deleteTodoById(todo.id)}>
+                                <Delete />
+                            </IconButton>
                         </div>
                     )
                 }
-                
-                <IconButton onClick={() => deleteTodoById(todo.id)}>
-                    <Delete />
-                </IconButton>
             </div>
         );
     }

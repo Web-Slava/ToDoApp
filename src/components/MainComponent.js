@@ -3,6 +3,7 @@ import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import TodoListContainer from './todo/TodoListContainer';
 import AddTodoComponent from './todo/AddTodoComponent';
+import TodoModal from './todo/TodoModal';
 
 const generateIdByTitle = () => {
     return '_' + Math.random().toString(36).substr(2, 9);
@@ -12,11 +13,44 @@ class MainComponent extends React.Component{
     constructor(props) {
         super(props);
         this.state = {
-            todoList: []
+            todoList: [],
+            isOpenModal: null
         };
         this.addNewTodo = this.addNewTodo.bind(this);
         this.updateTodo = this.updateTodo.bind(this);
         this.deleteTodoById = this.deleteTodoById.bind(this);
+        this.loadTodos = this.loadTodos.bind(this);
+        this.onCloseModal = this.onCloseModal.bind(this);
+        this.onOpenModal = this.onOpenModal.bind(this);
+    }
+
+    onCloseModal() {
+        this.setState({
+            isOpenModal: null
+        });
+    }
+
+    onOpenModal(id) {
+        this.setState({
+            isOpenModal: id
+        });
+    }
+
+    loadTodos() {
+        fetch('http://localhost:3000/todos', {
+            method: 'GET'
+        })
+        .then((response) => response.json())
+            .then(todos => {
+                console.log(todos);
+                this.setState({
+                    todoList: todos
+                });
+            });
+    }
+
+    componentDidMount() {
+        this.loadTodos();
     }
 
     addNewTodo(newTodoTitle) {
@@ -25,38 +59,47 @@ class MainComponent extends React.Component{
             id: generateIdByTitle(newTodoTitle),
             status: 'TODO' // or DONE
         };
-        this.setState({ 
-            todoList: this.state.todoList.concat(newTodo)
-        });
+        fetch('http://localhost:3000/todos', {
+            method: 'POST',
+            headers: {'Content-Type':'application/json'},
+            body: JSON.stringify(newTodo)
+        })
+            .then(response => {
+                if(response.status === 200) {
+                    this.loadTodos();
+                }
+            })
     }
 
     updateTodo(newData) {
-        this.setState(prevState => ({
-            todoList: prevState.todoList.map(
-                todo => (
-                    (todo.id === newData.id)
-                        ? ({
-                            ...todo,
-                            ...newData
-                        })
-                        : todo
-                )
-            )
-        }));
+        fetch(`http://localhost:3000/todos/${newData.id}`, {
+            method: 'PUT',
+            headers: {'Content-Type':'application/json'},
+            body: JSON.stringify(newData)
+        })
+            .then(response => {
+                if(response.status === 200) {
+                    this.loadTodos();
+                }
+            })
     }
 
     deleteTodoById(id) {
-        this.setState((prevState) => ({
-            todoList: prevState.todoList.filter(
-                todo => todo.id !== id
-            )
-        }));
+        fetch(`http://localhost:3000/todos/${id}`, {
+            method: 'DELETE'
+        })
+            .then(response => {
+                if(response.status === 200) {
+                    this.loadTodos();
+                }
+            })
     }
 
     render() {
         console.log(this.state.todoList);
         return(
-            <Grid container
+            <>
+                <Grid container
                 justify="center"
             >
                 <Grid item
@@ -71,10 +114,17 @@ class MainComponent extends React.Component{
                         <TodoListContainer todoList={this.state.todoList} 
                                            updateTodo={this.updateTodo}
                                            deleteTodoById={this.deleteTodoById}
+                                           onOpenModal={this.onOpenModal}
                         />
                     </Card>   
-                    </Grid>
+                </Grid>
             </Grid>
+                {!!this.state.isOpenModal && (
+                    <TodoModal onCloseModal={this.onCloseModal}
+                               todoId={this.state.isOpenModal}
+                    />
+                )}
+            </>
         );
     }
 }

@@ -4,7 +4,7 @@ import { Grid } from '@material-ui/core';
 import TodoComponent from './TodoComponent'
 
 function TodoListContainer(props){
-    const {todoList, updateTodo, deleteTodoById} = props; // array of todo's
+    const {todoList, updateTodo, deleteTodoById, onOpenModal} = props; // array of todo's
     return(
         <Grid container
               classes = {{
@@ -19,6 +19,7 @@ function TodoListContainer(props){
                                        todo={todo}
                                        updateTodo={updateTodo}
                                        deleteTodoById={deleteTodoById}
+                                       onOpenModal={onOpenModal}
                         />
                     ))
                 )   

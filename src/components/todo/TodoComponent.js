@@ -19,11 +19,19 @@ class TodoComponent extends React.Component{
         this.onUpdateTitle = this.onUpdateTitle.bind(this);
     }
 
+    componentDidUpdate(prevProps, prevState) {
+        if(this.props.todo.title !== this.state.todoTitle) {
+            this.setState({
+                todoTitle: this.props.todo && this.props.todo.title
+            })
+        }
+    }
+
     onChangeCheckbox(event) {
         const {todo, updateTodo} = this.props;
         const newTodo = {
             ...todo,        // copy objects from todo
-            status: (event.target.value === 'false') ? 'DONE' : 'TODO'   
+            status: (event.target.checked) ? 'DONE' : 'TODO'   
         };
         updateTodo(newTodo);
     }
@@ -73,7 +81,7 @@ class TodoComponent extends React.Component{
                         </div>
                     )
                     : (<div className="todoItem">
-                            <Checkbox value={todo.status === 'DONE'}
+                            <Checkbox checked={todo.status === 'DONE'}
                                 onChange={this.onChangeCheckbox}
                             />
                             <>

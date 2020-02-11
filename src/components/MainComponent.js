@@ -122,6 +122,7 @@ class MainComponent extends React.Component{
                 {!!this.state.isOpenModal && (
                     <TodoModal onCloseModal={this.onCloseModal}
                                todoId={this.state.isOpenModal}
+                               loadTodos={this.loadTodos}
                     />
                 )}
             </>
